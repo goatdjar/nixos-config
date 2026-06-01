@@ -5,6 +5,7 @@
   # Time zone and Internationalization
   time.timeZone = "Europe/Helsinki";
   i18n.defaultLocale = "en_US.UTF-8";
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "fi_FI.UTF-8";
     LC_IDENTIFICATION = "fi_FI.UTF-8";
@@ -16,6 +17,11 @@
     LC_TELEPHONE = "fi_FI.UTF-8";
     LC_TIME = "fi_FI.UTF-8";
   };
+
+  i18n.supportedLocales = [
+    "en_US.UTF-8/UTF-8"
+    "fi_FI.UTF-8/UTF-8"
+  ];
 
   # Flake & Performance Settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
