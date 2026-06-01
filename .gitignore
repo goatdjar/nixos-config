@@ -1,0 +1,66 @@
+# ==============================================================================
+# DEClARATIVE CHAOS / DETERMINISTIC SYSTEM ECOSYSTEM - .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Secrets & Sensitive Data (CRITICAL - Never commit these)
+# ------------------------------------------------------------------------------
+*secret*
+*token*
+*.key
+*.pem
+*.pfx
+*.crt
+.env
+.env.*
+.direnv/
+secrets.yaml
+secrets.json
+
+# ------------------------------------------------------------------------------
+# Nix & Flake Build Artifacts / Transient State
+# ------------------------------------------------------------------------------
+# Ignore evaluation cache and local dev environment tracking
+.nix-profile
+.nix-defexpr
+result
+result-*
+
+# NOTE: Do NOT ignore flake.lock!
+# It ensures absolute reproducibility across builds.
+
+# ------------------------------------------------------------------------------
+# User Dotfiles / Application State & Cache
+# ------------------------------------------------------------------------------
+# System-specific or auto-generated runtime files
+.DS_Store
+Thumbs.db
+*.local
+*.bak
+*.tmp
+*~
+
+# Shell history (if your dotfiles link directly into active runtime dirs)
+.zsh_history
+.bash_history
+.lesshst
+
+# ------------------------------------------------------------------------------
+# Specific Application State (If you mirror ~/.config structures directly)
+# ------------------------------------------------------------------------------
+# Neovim swap, undo, and backup files
+.netrwhist
+*.swp
+*.swo
+.vim/
+
+# Kubernetes / Cloud local config overrides (if not managed by Nix natively)
+.kube/config.local
+.aws/credentials.local
+
+# ------------------------------------------------------------------------------
+# Agenix / sops-nix local unencrypted files (if applicable)
+# ------------------------------------------------------------------------------
+# If you use age/sops for managing Nix secrets, ignore the raw decrypted stubs
+decrypted/
+*.decrypted.*
