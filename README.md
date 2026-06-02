@@ -24,10 +24,13 @@ This repository maintains a fully modularized NixOS configuration optimized for 
 │   │           ├── 📄 init.el
 │   │           └── 📄 packages.el
 │   │
-│   └── 📁 wezterm/
-│       └── 📁 .config/
-│           └── 📁 wezterm/
-│               └── 📄 wezterm.lua
+│   ├── 📁 wezterm/
+│   │   └── 📁 .config/
+│   │       └── 📁 wezterm/
+│   │           └── 📄 wezterm.lua
+│   │
+│   └── 📁 zsh/
+│       └── 📄 .zshrc
 │ 
 ├── 📁 archived
 │   ├── ❄️ configuration.nix

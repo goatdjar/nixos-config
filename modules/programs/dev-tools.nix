@@ -12,11 +12,7 @@
     histSize = 10000;
     histFile = "$HOME/.zsh_history";
     setOptions = [ "HIST_IGNORE_ALL_DUPS" ];
-    shellAliases = {
-      ll = "eza -l";
-      edit = "sudo -e";
-      upns = "sudo nixos-rebuild switch --flake .#";
-    };
+    shellAliases = {};
   };
 
   # Git Identity
