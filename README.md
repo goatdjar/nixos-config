@@ -6,6 +6,7 @@ This repository maintains a fully modularized NixOS configuration optimized for 
 
 ```text
 📁 .
+├── 📄 README.md
 ├── 📄 .gitignore
 ├── ❄️ flake.lock
 ├── ❄️ flake.nix
@@ -23,11 +24,11 @@ This repository maintains a fully modularized NixOS configuration optimized for 
 │   │           ├── 📄 init.el
 │   │           └── 📄 packages.el
 │   │
-│   ├── 📁 wezterm/
-│   │   └── 📁 .config/
-│   │       └── 📁 wezterm/
-│   │           └── 📄 wezterm.lua
-│   │
+│   └── 📁 wezterm/
+│       └── 📁 .config/
+│           └── 📁 wezterm/
+│               └── 📄 wezterm.lua
+│ 
 ├── 📁 archived
 │   ├── ❄️ configuration.nix
 │   └── ❄️ hardware-configuration.nix

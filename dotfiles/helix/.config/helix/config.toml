@@ -1,0 +1,67 @@
+# theme = "gruvbox_dark_soft"
+theme = "gruvbox-material"
+
+[editor]
+auto-completion = true
+completion-replace = true
+completion-trigger-len = 1
+
+bufferline = "multiple"
+cursorline = true
+line-number = "relative"
+rulers = [120]
+
+true-color = true
+
+end-of-line-diagnostics = "hint"
+
+# gutters = ["diagnostics", "diff", "line-numbers"]
+
+[editor.cursor-shape]
+# insert = "bar"
+# normal = "block"
+# select = "underline"
+
+[editor.indent-guides]
+character = "╎"
+render = true
+
+[editor.lsp]
+# auto-signature-help = false
+display-messages = true
+
+[editor.statusline]
+# left = ["mode", "spinner", "version-control", "file-name"]
+left = ["spinner","mode", "file-name"]
+right = ["position","file-type","file-encoding"]
+
+[editor.inline-diagnostics]
+cursor-line = "error"
+other-lines = "disable"
+
+# Normal mode keys like vim
+[keys.normal]
+C-s = ":write"
+"{" = "goto_prev_paragraph"
+"}" = "goto_next_paragraph"
+g.O = ["open_above", "delete_word_backward"]
+g.o = ["open_below", "delete_word_backward"]
+
+[keys.insert]
+A-ret = ["insert_newline", "delete_word_backward"]
+
+# inverse of 'x' 
+A-x = "extend_to_line_bounds"
+# X = "extend_line_above"
+
+[keys.select]
+A-x = "extend_to_line_bounds"
+X = "extend_line_above"
+
+# Move a selected block of code up and down
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+# [editor.clipboard-provider.custom]
+# yank = "wl-copy"
+# paste = "wl-paste"

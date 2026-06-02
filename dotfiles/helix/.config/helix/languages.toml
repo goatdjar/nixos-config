@@ -1,0 +1,71 @@
+[[language]]
+name = "make"
+scope = "source.make"
+file-types = [{ glob = "Makefile" }, { glob = "makefile" }, "make", "mk", "mak", {glob = "GNUmakefile" }, { glob = "OCamlMakefile" }]
+shebangs = ["make", "gmake"]
+injection-regex = "(make|makefile|Makefile|mk)"
+comment-token = "#"
+indent = { tab-width = 4, unit = "\t" }
+
+[[language]]
+name = "python"
+scope = "source.python"
+injection-regex = "py(thon)?"
+file-types = ["py", "pyi", "py3", "pyw", "ptl", "rpy", "cpy", "ipy", "pyt", { glob = ".python_history" }, { glob = ".pythonstartup" }, { glob = ".pythonrc" }, { glob = "*SConstruct" }, { glob = "*SConscript" }, { glob = "*sconstruct" }]
+shebangs = ["python", "uv"]
+roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
+comment-token = "#"
+language-servers = ["ruff", "pylsp", "typos"]
+auto-format = true
+# TODO: pyls needs utf-8 offsets
+indent = { tab-width = 4, unit = "    " }
+
+[language-server.typos]
+command = "typos-lsp"
+
+[[language]]
+name = "svelte"
+scope = "source.svelte"
+file-types = ["svelte"]
+roots = ["package.json", "svelte.config.{js,ts}"]
+language-servers = ["svelteserver", "typescript-language-server"] # You may want to include other LSPs like tailwindcss-ls
+formatter = { command = "prettier", args = ["--parser", "svelte"] }
+auto-format = true
+
+[language-server.svelteserver]
+command = "svelteserver"
+args = ["--stdio"]
+
+[[language]]
+name = "tfvars"
+language-servers = [ "tofu-ls" ]
+language-id = "tofu-vars"
+
+[[language]]
+name = "hcl"
+language-id = "opentofu"
+scope = "source.hcl"
+file-types = ["tf", "tofu", "tfvars"]
+auto-format = true
+comment-token = "#"
+block-comment-tokens = { start = "/*", end = "*/" }
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "tofu-ls" ]
+
+[language-server.tofu-ls]
+command = "tofu-ls"
+args = ["serve"]
+
+# Solidity Stuff
+[[language]]
+name = "solidity"
+scope = "source.solidity"
+injection-regex = "solidity"
+file-types = ["sol"]
+comment-token = "//"
+language-servers = ["vscode-solidity-server"]
+indent = { tab-width = 4, unit = "    " }
+
+[language-server.vscode-solidity-server]
+command = "vscode-solidity-server"
+args = ["--stdio"]
