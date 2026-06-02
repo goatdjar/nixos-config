@@ -64,3 +64,11 @@ Thumbs.db
 # If you use age/sops for managing Nix secrets, ignore the raw decrypted stubs
 decrypted/
 *.decrypted.*
+
+# ------------------------------------------------------------------------------
+# Doom Emacs Local Caches & Runtime Noise
+# ------------------------------------------------------------------------------
+# Ignore transient build states, packages compiled via straight.el, and local history
+dotfiles/doom/.config/doom/.local/
+dotfiles/doom/.config/doom/org-clock-save.el
+dotfiles/doom/.config/doom/.org-id-locations

@@ -1,0 +1,382 @@
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;;
+;; Hide the ASCII banner entirely
+;; 1. Use the 'after!' macro to ensure this runs after the module loads
+(after! doom-dashboard
+  ;; 2. Completely redefine the function list to EXCLUDE the banner
+  (setq +doom-dashboard-functions
+        '(doom-dashboard-widget-shortmenu
+          doom-dashboard-widget-loaded)))
+
+;; 3. Disable the ASCII banner function directly just to be safe
+(setq +doom-dashboard-ascii-banner-fn nil)
+
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
+;; (setq user-full-name "John Doe"
+;;       user-mail-address "john@doe.com")
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+                                        ;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-symbol-font' -- for symbols
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+;; (setq doom-theme doom-one)
+(setq doom-theme 'doom-gruvbox)
+
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/org/")
+
+
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `with-eval-after-load' block, otherwise Doom's defaults may override your
+;; settings. E.g.
+;;
+;;   (with-eval-after-load 'PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look them up).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+
+;; User config start --------------------------------------------------------->
+
+;; True Full Screen
+(add-to-list 'default-frame-alist '(fullscreen . fullscreen))
+;; (add-to-list 'default-frame-alist '(width . 200))
+;; (add-to-list 'default-frame-alist '(height . 40))
+
+;; (defun my/center-frame ()
+;;   "Center the current frame on the screen."
+;;   (interactive)
+;;   (let* ((frame (selected-frame))
+;;          (extra-width (- (display-pixel-width) (frame-pixel-width frame)))
+;;          (extra-height (- (display-pixel-height) (frame-pixel-height frame)))
+;;          (left (max 0 (/ extra-width 2)))
+;;          (top (max 0 (/ extra-height 2))))
+;;     (set-frame-position frame left top)))
+
+;; ;; Run it automatically when Emacs starts up
+;; (add-hook 'window-setup-hook #'my/center-frame)
+
+;; (add-to-list 'default-frame-alist '(alpha-background . 50)) ; Set background transparency to 90%
+(custom-set-faces! '(default :background nil))
+
+;; Cursor no blink
+(blink-cursor-mode 0)
+(setq-default cursor-type 'box)
+;; (setq-default cursor-in-non-selected-windows t)
+;; Force a block in all modes
+(setq evil-default-cursor '("#32CD32" box)) ;; Lime Green
+(setq evil-normal-state-cursor   '("#32CD32" box)  ;; Lime Green
+      evil-insert-state-cursor   '("#ff6c6b" box)  ;; Soft Red
+      evil-visual-state-cursor   '("#f78c6c" box)  ;; Pastel / Coral Orange
+      evil-replace-state-cursor  '("#c678dd" box)) ;; Orchid / Magenta
+
+(setq evil-motion-state-cursor 'box)
+(setq evil-operator-state-cursor 'box)
+
+;; Font config
+(setq doom-font (font-spec :family "Iosevka" :size 20 :weight 'regular))
+;; doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 19 :weight 'medium))
+
+;; (setq text-scale-mode-step 1.1)
+(setq doom-font-increment 0.5)
+
+;; Make doc strings italic
+(custom-set-faces!
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-doc-face :slant italic))
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type 'visual)
+
+;; Show current encoding on buffer, set UTF-8 as default
+(setq doom-modeline-buffer-encoding t)
+(setq-default buffer-file-coding-system 'utf-8-unix)
+(set-default-coding-systems 'utf-8)
+
+;; Dim Inactive windows
+(solaire-global-mode +1)
+
+;; perf upgrades startup
+(setq gcmh-high-cons-threshold (* 128 1024 1024)) ; 128MB
+
+;; fast layout switching
+(setq persp-sort 'created)
+
+;; permanent nix mode
+(setq lsp-nix-nixd-server-path "nixd")
+(after! lsp-mode
+  (setq lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"))
+
+;; nixmode with lsp
+(add-hook 'nix-mode-hook #'lsp!)
+
+;; ==========================================
+;; 6. COMPLETION (CORFU & CAPE)
+;; ==========================================
+;; Corfu config
+;; (use-package! corfu-terminal
+;;   :when (not (display-graphic-p))
+;;   :config
+;;   (corfu-terminal-mode +1))
+
+;; autocomplete other things
+;; (use-package! cape
+;;   :init
+;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev) ; Scans words in current file
+;;   (add-to-list 'completion-at-point-functions #'cape-file)    ; Autocompletes file paths
+;;   (add-to-list 'completion-at-point-functions #'cape-keyword)) ; Autocompletes language keywords
+
+(after! corfu
+  (setq corfu-auto t                            ;; Enable auto-completion popup
+        corfu-auto-delay 0.1                    ;; Wait just 0.1 seconds after typing stops
+        corfu-auto-prefix 1                     ;; Show popup after typing 1 character
+        corfu-quit-at-boundary 'separator))     ;; Make corfu play nicely with Vim modes
+
+(after! corfu-terminal
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))
+
+(after! cape
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+
+
+;; Terraform-mode / OpenTofu
+(setq terraform-command "tofu")
+
+;; Remove underline when error on emacs -nw mode
+(custom-set-faces!
+  '(flycheck-error :underline nil :inherit nil)
+  '(flycheck-warning :underline nil :inherit nil))
+
+;; automatically enable the mode for .proto files:
+(use-package! protobuf-mode
+  :mode "\\.proto\\'")
+
+;; 1. Format on save using gopls (faster than calling gofmt externally)
+(setq lsp-go-analyses
+      '((nilness . t)
+        (unusedparams . t)
+        (unusedwrite . t)
+        (useany . t)))
+
+;; 3. Optional: Auto-format on save
+(setq +format-with-lsp t)
+
+;; in config.el
+(setq highlight-indent-guides-method 'character)
+(setq highlight-indent-guides-char ?:)
+;; (setq highlight-indent-guides-responsive 'top) ; highlights the guide for the current block
+(setq highlight-indent-guides-responsive 'character)
+
+;; Set standard Emacs tab width
+(setq-default tab-width 4)
+
+;; Set the indention width for standard programming modes
+(setq-default standard-indent 4)
+(setq-default evil-shift-width 4) ; Controls width for evil mode shift operators (>> and <<)
+
+;; Restore Vim's paste-and-indent by sending raw keystrokes instead
+(map! :n "]p" "p`[v`]>")
+(map! :n "[p" "P`[v`]>")
+
+;; Remap incremental search to M-s to free up C-s
+;; Maps Alt+S to Doom's default buffer search (Vertico/Consult or Ivy)
+;; M-s was dirvish ui, need to remap that aswell but I never use it
+;; atleast not yet.
+(map! :nv "M-s" #'+default/search-buffer)
+
+;; Remap C-s to Save (Normal & Insert Modes)
+(map! :n "C-s" #'save-buffer
+      :i "C-s" #'save-buffer)
+
+;; remap C-c to work when editing files
+(map! :n "C-c" #'evil-ex-nohighlight
+      :i "C-c" #'evil-normal-state
+      :v "C-c" #'evil-normal-state)
+
+;; fix broken C-c while on vterm shell
+(after! vterm
+  (map! :map vterm-mode-map
+        :ni "C-c" #'vterm-send-C-c))
+
+;; in normal mode, remap RET and S-RET to add new lines without going
+;; into insert mode
+(map! :map (text-mode-map prog-mode-map)
+      :n "<return>"   #'+evil/insert-newline-below
+      :n "<S-return>" #'+evil/insert-newline-above)
+
+;; Python Stuff --------------------------------------- ********************
+;; python binary for LSP, use pyright
+(after! lsp-pyright
+  (setq lsp-pyright-langserver-command "pyright"))
+
+;; in ~/.doom.d/config.el
+(setq-hook! 'python-mode-hook +format-with 'ruff)
+(setq-hook! 'python-ts-mode-hook +format-with 'ruff)
+
+;; Rust Stuff --------------------------------------------------------->
+(after! lsp-rust
+  (setq lsp-inlay-hints-mode t))                 ;; (Bonus: keeps hints on)
+;; (setq lsp-enable-on-type-formatting nil))     ;; Prevents mid-typing format clashes
+
+;; This fails when emacs doom restarts
+(after! rustic
+  (set-popup-rule! "^\\*cargo-run" :side 'top :size 0.90 :quit t :select nil))
+
+
+
+;; |======================================================|
+;; |              EXPERIMENTAL SECTION                    |
+;; |======================================================|
+;; Test if this persists
+;; (after! rustic
+;;   (setq display-buffer-alist
+;;         (cons '("\\*cargo-run"
+;;                 (display-buffer-reuse-window display-buffer-in-side-window)
+;;                 (side . top)
+;;                 (window-height . 0.4)
+;;                 (dedicated . t))
+;;               display-buffer-alist)))
+
+
+;; sui move-mode
+;; (use-package! move-mode
+;;   :mode "\\.move\\'"
+;;   :hook (move-mode . lsp!)
+;;   :config
+;;   (setq move-indent-offset 4)
+
+;;   ;; 1. Define a manual, crash-proof format function
+;;   (defun my/format-move-file ()
+;;     "Save the file, run movefmt, and safely refresh the buffer."
+;;     (interactive)
+;;     (when (derived-mode-p 'move-mode)
+;;       (save-buffer)
+;;       ;; Run movefmt directly on the file path
+;;       (shell-command (format "movefmt %s" (shell-quote-argument buffer-file-name)))
+;;       ;; Silently reload the file from the disk so Emacs sees the updates
+;;       (revert-buffer t t)))
+
+;;   ;; 2. Bind it to a simple key combination inside move-mode
+;;   (map! :map move-mode-map
+;;         :localleader
+;;         :desc "Format buffer" "f" #'my/format-move-file)
+
+;;   ;; Configure native Tree-sitter
+;;   (after! treesit
+;;     (add-to-list 'treesit-language-source-alist
+;;                  '(move "https://github.com/itmettke/tree-sitter-move" "main")))
+
+;;   ;; Register move-analyzer
+;;   (after! lsp-mode
+;;     (setq lsp-idle-delay 0.5
+;;           lsp-log-io nil
+;;           read-process-output-max (* 1024 1024))
+;;     (lsp-register-client
+;;      (make-lsp-client :new-connection (lsp-stdio-connection "move-analyzer")
+;;                       :major-modes '(move-mode)
+;;                       :server-id 'move-analyzer))))
+
+;; LSP Mode
+(after! lsp-mode
+  (setq lsp-idle-delay 0.5)         ;; Default is often 0.1 or 0.2. Raising to 0.5 helps a lot.
+  (setq lsp-before-save-edits nil)) ;; Prevents LSP from modifying the buffer file right before saving it,
+;; letting Doom's standard formatting hooks handle it cleanly.
+
+(after! projectile
+  (add-to-list 'projectile-project-root-files "pyproject.toml")
+  (add-to-list 'projectile-project-root-files "uv.lock"))
+
+
+;; project specific configuration
+;; set default directory for quick run on project root
+;; (add-hook 'find-file-hook
+;;           (lambda ()
+;;             (when-let ((project-root (projectile-project-root)))
+;;               (setq default-directory project-root))))
+
+;; quick run
+(map! :leader
+      (:prefix-map ("r" . "run")
+       :desc "Run current file" "r" #'quickrun))
+
+;; adjusts pane(s)
+;; window manipulation / micro-state
+(define-prefix-command 'my-window-resize-map)
+(define-key my-window-resize-map (kbd "<") (lambda () (interactive) (shrink-window-horizontally -3) (set-transient-map my-window-resize-map t)))
+(define-key my-window-resize-map (kbd ">") (lambda () (interactive) (shrink-window-horizontally 3)  (set-transient-map my-window-resize-map t)))
+(define-key my-window-resize-map (kbd "+") (lambda () (interactive) (enlarge-window 3)              (set-transient-map my-window-resize-map t)))
+(define-key my-window-resize-map (kbd "-") (lambda () (interactive) (enlarge-window -3)             (set-transient-map my-window-resize-map t)))
+;; Now you can effortlessly tap >, <, +, or - repeatedly to size your splits. Press ESC to quit.
+(map! :leader
+      :desc "Resize mode"
+      "w ." (lambda () (interactive) (set-transient-map my-window-resize-map t)))
+
+;; silence keystrokes
+(setq echo-keystrokes 0)
+
+;; Force the quickrun output window to pop up at the bottom and take focus
+;; (set-popup-rule! "^\\*quickrun\\*" :side 'bottom :size 0.4 :ttl nil :quit t :select t)
+;; Configure async terminal to popup on the right side of the sceren.
+;; (set-popup-rule! "^\\*doom:vterm" :side 'right :size 0.4 :quit nil :ttl nil)
+
+;; Helpful shortcuts for Python Debugging
+;; ---
+;; SPC o r or M-x +python/open-repl: Opens a persistent Python REPL side-window.
+;; SPC o r
+;; ---
+;; Send python code to REPL
+;; SPC c e
+;; ---
+;; Quickly cycle your cursor back and forth between your code and the REPL window.
+;; C-w w
+;; If you ever want to quickly clear the REPL buffer when it gets cluttered with old inputs.
+;; SPC c p
