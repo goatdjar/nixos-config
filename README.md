@@ -6,16 +6,37 @@ This repository maintains a fully modularized NixOS configuration optimized for 
 
 ```text
 📁 .
-├── 📁 archived
-│   ├── ❄️ configuration.nix
-│   └── ❄️ hardware-configuration.nix
 ├── 📄 .gitignore
 ├── ❄️ flake.lock
 ├── ❄️ flake.nix
+│
+├── 📁 dotfiles
+│   ├── 📁 direnv/
+│   │   └── 📁 .config/
+│   │       └── 📁 direnv/
+│   │           └── 📄 direnv.toml
+│   │
+│   ├── 📁 doom/
+│   │   └── 📁 .config/
+│   │       └── 📁 doom/
+│   │           ├── 📄 config.el
+│   │           ├── 📄 init.el
+│   │           └── 📄 packages.el
+│   │
+│   ├── 📁 wezterm/
+│   │   └── 📁 .config/
+│   │       └── 📁 wezterm/
+│   │           └── 📄 wezterm.lua
+│   │
+├── 📁 archived
+│   ├── ❄️ configuration.nix
+│   └── ❄️ hardware-configuration.nix
+│
 ├── 📁 hosts
 │   └── 📁 nixhp
 │       ├── ❄️ default.nix
 │       └── ❄️ hardware-configuration.nix
+│
 └── 📁 modules
     ├── 📁 core
     │   └── ❄️ default.nix
