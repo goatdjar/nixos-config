@@ -88,7 +88,7 @@ alias emacs='emacsclient -a "" -t'
 alias et="emacsclient -nw -a ''"
 
 # Dotfiles Directory
-alias dotfiles="cd $HOME/.config/nixos-config/dotfiles"
+alias dotnix="cd $HOME/.config/nixos-config"
 
 # 5. Prompt & Environment Tool Hooks (Loaded last)
 eval "$(starship init zsh)"
