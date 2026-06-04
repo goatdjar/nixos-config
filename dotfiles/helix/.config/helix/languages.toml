@@ -69,3 +69,14 @@ indent = { tab-width = 4, unit = "    " }
 [language-server.vscode-solidity-server]
 command = "vscode-solidity-server"
 args = ["--stdio"]
+
+[language-server.scarb-lsp]
+command = "scarb"
+args = ["cairo-language-server"]
+
+[[language]]
+name = "cairo"
+language-servers = [ "scarb-lsp" ]
+file-types = ["cairo"]
+comment-token = "//"
+indent = { tab-width = 4, unit = "    " }

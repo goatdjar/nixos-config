@@ -87,6 +87,9 @@ alias upns="sudo nixos-rebuild switch --flake .#"
 alias emacs='emacsclient -a "" -t'
 alias et="emacsclient -nw -a ''"
 
+# Dotfiles Directory
+alias dotfiles="cd $HOME/.config/nixos-config/dotfiles"
+
 # 5. Prompt & Environment Tool Hooks (Loaded last)
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
