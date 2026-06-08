@@ -139,6 +139,38 @@
 (after! lsp-rust
   (setq lsp-inlay-hints-mode t))
 
+;; (setq-hook! 'rust-mode-hook fill-column 100)
+
+;; (add-hook! 'rust-mode-hook
+;;   (defun my-rust-mode-visuals ()
+;;     (display-fill-column-indicator-mode +1)))
+
+;; (after! rustic
+;;   (setq rustic-format-on-save t)
+;;   (setq rustic-format-trigger 'on-save))
+(after! rustic
+  (setq rustic-format-on-save t)
+  (setq rustic-format-trigger 'on-save)
+  (setq-hook! 'rustic-mode-hook fill-column 100))
+;; (add-hook! 'rustic-mode-hook #'display-fill-column-indicator-mode))
+
+(after! solidity-mode
+  ;; Force solidity-mode to trigger LSP when a file opens
+  (add-hook 'solidity-mode-hook #'lsp-deferred)
+
+  ;; Formatting on save via forge/prettier if desired
+  (setq +format-with-lsp nil) ; Set to t if you want the language server to format
+
+  ;; Custom keybind to quickly trigger a forge build from inside Emacs
+  (map! :map solidity-mode-map
+        :localleader
+        :desc "Forge Build" "b" #'(lambda () (interactive) (compile "forge build"))
+        :desc "Forge Test"  "t" #'(lambda () (interactive) (compile "forge test"))))
+
+;;  Make Emacs Nix-Aware
+(use-package! envrc
+  :hook (after-init . envrc-global-mode))
+
 ;; Infrastructure & Protocol Formats
 (setq terraform-command "tofu")
 (use-package! protobuf-mode

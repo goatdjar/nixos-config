@@ -62,3 +62,5 @@
 
 (package! move-mode
   :recipe (:host github :repo "amnn/move-mode"))
+
+(package! envrc)
